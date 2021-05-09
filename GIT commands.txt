@@ -1,0 +1,7 @@
+git config --global user.email "<your e-mail>"
+
+git clone <URL>
+
+
+
+https://www.computerhope.com/issues/ch001927.htm
