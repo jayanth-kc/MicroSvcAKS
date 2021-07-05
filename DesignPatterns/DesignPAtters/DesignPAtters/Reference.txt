@@ -1,0 +1,4 @@
+﻿https://dotnettutorials.net/course/dot-net-design-patterns/
+https://code-maze.com/design-patterns-csharp/
+
+https://www.lucidchart.com/blog/uml-diagram-templates
