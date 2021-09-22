@@ -37,3 +37,5 @@ C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\obj\Debug\net5.0\ref\Shop
 C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\obj\Debug\net5.0\Shopping.Client.pdb
 C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\obj\Debug\net5.0\Shopping.Client.genruntimeconfig.cache
 C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\obj\Debug\net5.0\Shopping.Client.csproj.CopyComplete
+C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\obj\Debug\net5.0\Shopping.Client.csproj.AssemblyReference.cache
+C:\GIT\MicroServicesAksDevOps\Shopping\Shopping.Client\bin\Debug\net5.0\Newtonsoft.Json.dll

@@ -1,0 +1,109 @@
+Start Docker Images
+run  = docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+stop = docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+--
+See images
+docker images
+
+See running containers
+docker ps
+--
+See application locally
+TEST
+http://localhost:8000/swagger/index.html
+http://localhost:8001/
+--
+Stop Running Containers
+stop = docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+-- --
+Install the Azure CLI
+	https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+	https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli
+--
+az version
+
+{
+  "azure-cli": "2.16.0",
+  "azure-cli-core": "2.16.0",
+  "azure-cli-telemetry": "1.0.6",
+  "extensions": {}
+}
+--
+az login
+--
+Create a resource group
+az group create --name myMicrRG --location westeurope
+--
+Create an Azure Container Registry
+az acr create --resource-group myMicrRG --name mymicrshoppingacr --sku Basic
+--
+Enable Admin Account for ACR Pull
+az acr update -n mymicrshoppingacr --admin-enabled true
+--
+Log in to the container registry
+az acr login --name mymicrshoppingacr
+Login Succeeded
+--
+Tag a container image
+
+get the login server address
+az acr list --resource-group myMicrRG --query "[].{acrLoginServer:loginServer}" --output table
+mymicrshoppingacr.azurecr.io
+--
+Tag your images
+
+docker tag shoppingapi:latest mymicrshoppingacr.azurecr.io/shoppingapi:v1
+docker tag shoppingclient:latest mymicrshoppingacr.azurecr.io/shoppingclient:v1
+
+Check
+docker images
+--
+Push images to registry
+
+docker push mymicrshoppingacr.azurecr.io/shoppingapi:v1
+docker push mymicrshoppingacr.azurecr.io/shoppingclient:v1
+--
+List images in registry
+az acr repository list --name mymicrshoppingacr --output table
+
+Result
+shoppingapi
+shoppingclient
+--
+See tags
+az acr repository show-tags --name mymicrshoppingacr --repository shoppingclient --output table
+
+Result
+v1
+--
+Create AKS cluster with attaching ACR
+az aks create --resource-group myMicrRG --name myAKSCluster --node-count 1 --generate-ssh-keys --attach-acr mymicrshoppingacr
+
+--
+Install the Kubernetes CLI
+az aks install-cli
+--
+Connect to cluster using kubectl
+az aks get-credentials --resource-group myMicrRG --name myAKSCluster
+
+To verify;
+kubectl get nodes
+kubectl get all
+--
+Check Kube Config
+
+kubectl config get-contexts
+kubectl config current-context
+kubectl config use-context gcpcluster-k8s-1
+	Switched to context "gcpcluster-k8s-1"
+--
+Deploy microservices to AKS
+
+kubectl apply -f .\aks\
+--
+Clean All AKS and Azure Resources
+
+az group delete --name myMicrRG --yes --no-wait
+
+
+kubectl create secret docker-registry acr-secret --docker-server=mymicrshoppingacr.azurecr.io --docker-username=mymicrshoppingacr --docker-password=6LOjmwjbOAiW=1lyiNXmJNczZ6dO8B+f --docker-email=jayanth_kc@hotmail.com
